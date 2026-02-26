@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 export default function NotFound() {
@@ -19,15 +17,10 @@ export default function NotFound() {
                         Oops! The page you are looking for doesn't exist or has been moved to a new address.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-4 pb-8">
+                <CardContent className="flex flex-col gap-4 pb-8 text-center">
                     <div className="h-px bg-slate-200 w-full my-2" />
-                    <Button asChild size="lg" className="w-full font-semibold">
-                        <Link to="/signin">
-                            Back to Sign In
-                        </Link>
-                    </Button>
-                    <p className="text-center text-sm text-slate-400">
-                        Lost? Try navigating back to the home page or contact support if you believe this is an error.
+                    <p className="text-sm text-slate-400">
+                        Try navigating back to a known URL or contact support if you believe this is an error.
                     </p>
                 </CardContent>
             </Card>
