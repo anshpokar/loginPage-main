@@ -145,7 +145,7 @@ export default function SignUp() {
                 </p>
               )}
             </div>
-            
+
             {/* Terms and Conditions Checkbox */}
             <div className="space-y-2">
               <div className="flex items-start space-x-2">
@@ -193,7 +193,7 @@ export default function SignUp() {
               {signUp.isPending ? 'Creating Account...' : 'Sign Up'}
             </Button>
           </form>
-          
+
           <div className="mt-6 text-center text-sm">
             <span className="text-muted-foreground">Already have an account? </span>
             <Link to="/signin" className="text-primary underline hover:text-primary/80 font-medium">
