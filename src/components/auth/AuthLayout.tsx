@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface AuthLayoutProps {
     children: React.ReactNode;
@@ -13,6 +13,77 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
     subtitle,
     imageAlt,
 }) => {
+    const [titleText, setTitleText] = useState('');
+    const [showTitleCursor, setShowTitleCursor] = useState(true);
+    const [showSubtitle, setShowSubtitle] = useState(false);
+
+    useEffect(() => {
+        let titleIndex = 0;
+        const typingSpeed = 50; // ms per character
+
+        const typeTitle = setInterval(() => {
+            if (titleIndex <= title.length) {
+                setTitleText(title.slice(0, titleIndex));
+                titleIndex++;
+            } else {
+                clearInterval(typeTitle);
+                setShowTitleCursor(false);
+                setShowSubtitle(true);
+            }
+        }, typingSpeed);
+
+        return () => clearInterval(typeTitle);
+    }, [title]);
+
+    const renderAnimatedTitle = () => {
+        const isDreamHome = title.includes("dream home");
+        const isPropertyJourney = title.includes("property journey");
+
+        if (isDreamHome) {
+            const prefix = "Find your ";
+
+            if (titleText.length <= prefix.length) {
+                return (
+                    <span className={showTitleCursor ? "typing-cursor" : ""}>
+                        {titleText}
+                    </span>
+                );
+            } else {
+                return (
+                    <>
+                        Find your <br />
+                        <span className={`text-purple-300 ${showTitleCursor ? "typing-cursor" : ""}`}>
+                            {titleText.slice(prefix.length)}
+                        </span>
+                    </>
+                );
+            }
+        }
+
+        if (isPropertyJourney) {
+            const prefix = "Start your ";
+
+            if (titleText.length <= prefix.length) {
+                return (
+                    <span className={showTitleCursor ? "typing-cursor" : ""}>
+                        {titleText}
+                    </span>
+                );
+            } else {
+                return (
+                    <>
+                        Start your <br />
+                        <span className={`text-purple-300 ${showTitleCursor ? "typing-cursor" : ""}`}>
+                            {titleText.slice(prefix.length)}
+                        </span>
+                    </>
+                );
+            }
+        }
+
+        return <span className={showTitleCursor ? "typing-cursor" : ""}>{titleText}</span>;
+    };
+
     return (
         <div className="flex min-h-screen w-full flex-col lg:flex-row">
             {/* Left Pane - Brand Side */}
@@ -39,20 +110,10 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({
 
                 {/* Inspirational Text */}
                 <div className="relative z-10 space-y-6">
-                    <h1 className="text-6xl font-black leading-[1.1] tracking-[-0.05em] text-balance">
-                        {title.includes("dream home") ? (
-                            <>
-                                Find your <br />
-                                <span className="text-purple-300">dream home</span>
-                            </>
-                        ) : title.includes("property journey") ? (
-                            <>
-                                Start your <br />
-                                <span className="text-purple-300">property journey</span>
-                            </>
-                        ) : title}
+                    <h1 className="text-6xl font-black leading-[1.1] tracking-[-0.05em] text-balance min-h-[1.2em]">
+                        {renderAnimatedTitle()}
                     </h1>
-                    <p className="max-w-lg text-xl font-medium text-white/80 leading-relaxed text-pretty">
+                    <p className={`max-w-lg text-xl font-medium text-white/80 leading-relaxed text-pretty min-h-[3em] transition-all duration-1000 transform ${showSubtitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                         {subtitle}
                     </p>
                 </div>
