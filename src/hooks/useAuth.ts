@@ -10,7 +10,6 @@ export const useAuth = () => {
       console.log('Sign In Success - Response Object:', data);
       // store token => local storage
       localStorage.setItem('token', data.token);
-      alert(`Welcome back, ${data.user.name}! Sign in successful.`);
     },
     onError: (error) => {
       console.error('Sign In Error:', error);
@@ -24,7 +23,6 @@ export const useAuth = () => {
       console.log('Sign Up Success - Response Object:', data);
       // localstorage
       localStorage.setItem('token', data.token);
-      alert(`Welcome, ${data.user.name}! Your account has been created successfully.`);
     },
     onError: (error) => {
       console.error('Sign Up Error:', error);

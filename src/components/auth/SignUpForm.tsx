@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const signUpSchema = z.object({
     name: z
@@ -62,9 +63,11 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
         };
         signUp.mutate(apiData, {
             onSuccess: () => {
+                toast.success('Account created successfully!');
                 onSuccess?.();
             },
             onError: (error: Error) => {
+                toast.error(error.message || 'Signup failed. Please try again.');
                 form.setError('root', { message: error.message });
             },
         });
@@ -80,12 +83,6 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
             )}
 
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                {form.formState.errors.root && (
-                    <div className="rounded-lg bg-destructive/10 p-3 text-sm font-medium text-destructive border border-destructive/20 transition-all">
-                        {form.formState.errors.root.message}
-                    </div>
-                )}
-
                 <div className="space-y-2">
                     <Label htmlFor="name" className="text-sm font-semibold text-zinc-700">Full Name</Label>
                     <Input

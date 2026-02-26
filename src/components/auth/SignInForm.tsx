@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const signInSchema = z.object({
     email: z
@@ -40,9 +41,11 @@ export const SignInForm = ({ onSuccess, isModal = false }: SignInFormProps) => {
     const onSubmit = (data: SignInFormData) => {
         signIn.mutate(data, {
             onSuccess: () => {
+                toast.success('Successfully signed in!');
                 onSuccess?.();
             },
             onError: (error: Error) => {
+                toast.error(error.message || 'Login failed. Please try again.');
                 form.setError('root', { message: error.message });
             },
         });
@@ -58,12 +61,6 @@ export const SignInForm = ({ onSuccess, isModal = false }: SignInFormProps) => {
             )}
 
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-                {form.formState.errors.root && (
-                    <div className="rounded-lg bg-destructive/10 p-3 text-sm font-medium text-destructive border border-destructive/20 transition-all">
-                        {form.formState.errors.root.message}
-                    </div>
-                )}
-
                 <div className="space-y-2">
                     <Label htmlFor="email" className="text-sm font-semibold text-zinc-700">Email Address</Label>
                     <Input
