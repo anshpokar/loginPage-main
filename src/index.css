@@ -23,6 +23,27 @@
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
+
+  /* Typography Variables */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-heading: "Outfit", var(--font-sans);
+  
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  
+  --lh-tight: 1.1;
+  --lh-relaxed: 1.6;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800;900&display=swap');
+
+@keyframes logo-zoom {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-logo-zoom {
+  animation: logo-zoom 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 :root {
