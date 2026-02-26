@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import './index.css'
 import SignIn from '@/pages/SignIn'
 import SignUp from '@/pages/SignUp'
+import NotFound from '@/pages/NotFound'
 
 // Create a client for TanStack Query
 const queryClient = new QueryClient({
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Navigate to="/signin" replace />,
+    errorElement: <NotFound />,
   },
   {
     path: '/signin',
