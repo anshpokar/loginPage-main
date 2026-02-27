@@ -7,6 +7,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { useAuth } from '../hooks/useAuth';
+import { ROUTES } from '@/shared/constants/routes';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -139,7 +140,7 @@ export const SignInForm = ({ onSuccess, isModal = false }: SignInFormProps) => {
                     <p className="text-zinc-500 font-medium">
                         Don't have an account?{' '}
                         <Link
-                            to="/signup"
+                            to={ROUTES.SIGN_UP}
                             className="font-bold text-purple-600 hover:text-purple-700 underline-offset-4 hover:underline transition-colors"
                         >
                             Create one now

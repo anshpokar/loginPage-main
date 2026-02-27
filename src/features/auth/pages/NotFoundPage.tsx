@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const NotFoundPage = () => {
     return (
@@ -14,7 +15,7 @@ export const NotFoundPage = () => {
                     <p className="text-gray-600">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
                     <div className="pt-4">
                         <Link
-                            to="/signin"
+                            to={ROUTES.SIGN_IN}
                             className="inline-flex items-center justify-center h-12 px-8 rounded-xl bg-primary hover:bg-primary/80 text-white font-semibold transition-all active:scale-95 shadow-lg shadow-indigo-200"
                         >
                             Back to SignIn

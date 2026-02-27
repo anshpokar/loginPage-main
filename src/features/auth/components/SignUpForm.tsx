@@ -8,6 +8,7 @@ import { Input } from '@/shared/components/ui/input';
 import { Label } from '@/shared/components/ui/label';
 import { Checkbox } from '@/shared/components/ui/checkbox';
 import { useAuth } from '../hooks/useAuth';
+import { ROUTES } from '@/shared/constants/routes';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -229,7 +230,7 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
                     <p className="text-zinc-500 font-medium">
                         Already have an account?{' '}
                         <Link
-                            to="/signin"
+                            to={ROUTES.SIGN_IN}
                             className="font-bold text-purple-600 hover:text-purple-700 underline-offset-4 hover:underline transition-colors"
                         >
                             Sign In

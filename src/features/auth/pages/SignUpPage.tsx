@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { AuthLayout } from '../components/AuthLayout';
 import { SignUpForm } from '../components/SignUpForm';
+import { ROUTES } from '@/shared/constants/routes';
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
 
   const handleSuccess = () => {
     // Navigate to dashboard or home after successful sign up
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   return (
