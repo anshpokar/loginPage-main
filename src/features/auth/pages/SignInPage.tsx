@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { AuthLayout } from '@/components/auth/AuthLayout';
-import { SignInForm } from '@/components/auth/SignInForm';
+import { AuthLayout } from '../components/AuthLayout';
+import { SignInForm } from '../components/SignInForm';
 
-export default function SignIn() {
+export const SignInPage = () => {
   const navigate = useNavigate();
 
   const handleSuccess = () => {

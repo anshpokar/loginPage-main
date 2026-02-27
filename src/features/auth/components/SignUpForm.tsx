@@ -1,13 +1,14 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import { useAuth } from '@/hooks/useAuth';
-import { Loader2 } from 'lucide-react';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
+import { Checkbox } from '@/shared/components/ui/checkbox';
+import { useAuth } from '../hooks/useAuth';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 const signUpSchema = z.object({
@@ -43,6 +44,8 @@ interface SignUpFormProps {
 
 export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
     const { signUp } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const form = useForm<SignUpFormData>({
         resolver: zodResolver(signUpSchema),
@@ -119,14 +122,27 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                         <Label htmlFor="signup-password" className="text-sm font-semibold text-zinc-700">Password</Label>
-                        <Input
-                            id="signup-password"
-                            type="password"
-                            placeholder="••••••••"
-                            disabled={signUp.isPending}
-                            className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20"
-                            {...form.register('password')}
-                        />
+                        <div className="relative">
+                            <Input
+                                id="signup-password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                disabled={signUp.isPending}
+                                className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20 pr-10"
+                                {...form.register('password')}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                            >
+                                {showPassword ? (
+                                    <EyeOff className="h-4 w-4" />
+                                ) : (
+                                    <Eye className="h-4 w-4" />
+                                )}
+                            </button>
+                        </div>
                         {form.formState.errors.password && (
                             <p className="text-xs font-medium text-destructive">
                                 {form.formState.errors.password.message}
@@ -135,14 +151,27 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="confirmPassword" className="text-sm font-semibold text-zinc-700">Confirm</Label>
-                        <Input
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="••••••••"
-                            disabled={signUp.isPending}
-                            className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20"
-                            {...form.register('confirmPassword')}
-                        />
+                        <div className="relative">
+                            <Input
+                                id="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                disabled={signUp.isPending}
+                                className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20 pr-10"
+                                {...form.register('confirmPassword')}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                            >
+                                {showConfirmPassword ? (
+                                    <EyeOff className="h-4 w-4" />
+                                ) : (
+                                    <Eye className="h-4 w-4" />
+                                )}
+                            </button>
+                        </div>
                         {form.formState.errors.confirmPassword && (
                             <p className="text-xs font-medium text-destructive">
                                 {form.formState.errors.confirmPassword.message}
@@ -155,7 +184,7 @@ export const SignUpForm = ({ onSuccess, isModal = false }: SignUpFormProps) => {
                     <Checkbox
                         id="terms"
                         className="mt-1 border-zinc-300 data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
-                        onCheckedChange={(checked) => form.setValue('terms', checked === true)}
+                        onCheckedChange={(checked: boolean) => form.setValue('terms', checked === true)}
                     />
                     <div className="grid gap-1.5 leading-none">
                         <label

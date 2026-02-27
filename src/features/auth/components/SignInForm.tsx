@@ -1,12 +1,13 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { useAuth } from '@/hooks/useAuth';
-import { Loader2 } from 'lucide-react';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Label } from '@/shared/components/ui/label';
+import { useAuth } from '../hooks/useAuth';
+import { Loader2, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 const signInSchema = z.object({
@@ -29,6 +30,7 @@ interface SignInFormProps {
 
 export const SignInForm = ({ onSuccess, isModal = false }: SignInFormProps) => {
     const { signIn } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
 
     const form = useForm<SignInFormData>({
         resolver: zodResolver(signInSchema),
@@ -88,14 +90,27 @@ export const SignInForm = ({ onSuccess, isModal = false }: SignInFormProps) => {
                             Forgot password?
                         </Link>
                     </div>
-                    <Input
-                        id="password"
-                        type="password"
-                        placeholder="••••••••"
-                        disabled={signIn.isPending}
-                        className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20"
-                        {...form.register('password')}
-                    />
+                    <div className="relative">
+                        <Input
+                            id="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••"
+                            disabled={signIn.isPending}
+                            className="h-11 border-zinc-200 bg-zinc-50/50 transition-all focus:bg-white focus:ring-2 focus:ring-purple-500/20 pr-10"
+                            {...form.register('password')}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="h-4 w-4" />
+                            ) : (
+                                <Eye className="h-4 w-4" />
+                            )}
+                        </button>
+                    </div>
                     {form.formState.errors.password && (
                         <p className="text-xs font-medium text-destructive animate-in fade-in slide-in-from-top-1">
                             {form.formState.errors.password.message}

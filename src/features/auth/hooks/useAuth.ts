@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { signIn, signUp, type SignInData, type SignUpData, type AuthResponse } from '@/services/api';
+import { signIn, signUp, type SignInData, type SignUpData, type AuthResponse } from '../api';
 
 // Custom hook for authentication using TanStack Query
 export const useAuth = () => {

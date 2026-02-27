@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { AuthLayout } from '@/components/auth/AuthLayout';
-import { SignUpForm } from '@/components/auth/SignUpForm';
+import { AuthLayout } from '../components/AuthLayout';
+import { SignUpForm } from '../components/SignUpForm';
 
-export default function SignUp() {
+export const SignUpPage = () => {
   const navigate = useNavigate();
 
   const handleSuccess = () => {
